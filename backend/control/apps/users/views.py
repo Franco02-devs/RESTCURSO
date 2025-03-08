@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from apps.users.api.serializers import UserTokenSerializer
+from apps.users.authentication_mixins import Authentication
 
 class Login(ObtainAuthToken):
     
@@ -75,15 +76,15 @@ class Logout(APIView):
         except:
             return Response({'error':'???? ;)'},status=status.HTTP_409_CONFLICT)
         
-class UserToken(APIView):
+class UserToken(Authentication  ,APIView):
     def get(self,request,*args, **kwargs):
-        username = request.GET.get('username')
+        
         try:
-            user_token=Token.objects.get(
-                user= UserTokenSerializer().Meta.model.objects.filter(username=username).first()
-                                         )
+            user_token,_=Token.objects.get_or_create(user= self.user)
+            user=UserTokenSerializer(self.user)
             return Response({
-                'token':user_token.key
+                'token':user_token.key,
+                'user':user,
             }  
             )
         except:

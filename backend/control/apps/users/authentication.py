@@ -28,21 +28,12 @@ class ExpiringTokenAuthentication(TokenAuthentication):
         return is_expire,token
     
     def authenticate_credentials(self, key):
-        message, token, user = None, None, None
+        user = None
         try:
             token=self.get_model().objects.select_related('user').get(key = key)
-            user=token.user
-            
+            token=self.token_expire_handler(token) 
+            user=token.user         
         except self.get_model().DoesNotExist:
-            message='Credentials not valid'
-            self.expired=True
-        
-        if token is not None:
-            if not token.user.is_active:
-                message='Usuario desactivado'
-            
-            is_expired =self.token_expire_handler(token)
-            if is_expired:
-                message='Sesión expirada'
-        return(user,token,message,self.expired)
+            pass
+        return(user)
             
