@@ -3,9 +3,9 @@ from rest_framework.response import Response
 
 from apps.base.api import GeneralListApiView
 from apps.records.api.serializers.record_serializers import RecordSerializer
-from apps.users.authentication_mixins import Authentication
 
-class RecordViewSet(Authentication, viewsets.ModelViewSet):
+class RecordViewSet(viewsets.ModelViewSet):
+    
     serializer_class= RecordSerializer
     
     def get_queryset(self, pk=None):
