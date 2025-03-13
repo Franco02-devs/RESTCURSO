@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +42,7 @@ THIRD_APPS=[
     'rest_framework.authtoken', 
     'rest_framework_simplejwt', 
     'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 SWAGGER_SETTINGS = {
@@ -109,6 +111,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SIMPLE_JWT={
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -150,4 +158,5 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     
 ]
+
 
