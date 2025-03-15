@@ -16,11 +16,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
-    def update(self, instance, validated_data):
-        updated_user = super().update(instance, validated_data)
-        updated_user.set_password(validated_data['password'])
-        updated_user.save()
-        return updated_user
+class UpdateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (  'username', 'email', 'name', 'last_name')
         
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,4 +32,14 @@ class UserListSerializer(serializers.ModelSerializer):
             'email':instance['email'],
             'name':instance['name']
                 }
+        
+class PasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(max_length = 128, min_length = 6, write_only = True)
+    password2 = serializers.CharField(max_length = 128, min_length = 6, write_only = True)
+    
+        
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError('Ambas contraseñas deben ser iguales!')
+        return data
         
