@@ -32,7 +32,7 @@ LOCAL_APPS=[
     'apps.users',
     'apps.base',
     'apps.records',
-    
+    'apps.inventory',
 ]
 
 THIRD_APPS=[
