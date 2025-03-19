@@ -3,14 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ElectroTotal": {
+    "bases": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss",
-          "changeDetection":"OnPush"       
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -18,14 +13,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/electro-total",
+            "outputPath": "dist/bases",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -33,14 +27,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -70,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ElectroTotal:build:production"
+              "buildTarget": "bases:build:production"
             },
             "development": {
-              "buildTarget": "ElectroTotal:build:development"
+              "buildTarget": "bases:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +78,6 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -97,12 +85,15 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
