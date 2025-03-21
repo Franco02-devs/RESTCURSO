@@ -21,7 +21,6 @@ addCharacter(){
         name: this.name(),
         power: this.power(),
     };
-    console.log(newCharacter)
     this.newCharacter.emit(newCharacter);
     this.resetFields()
 }
